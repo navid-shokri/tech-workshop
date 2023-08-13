@@ -2,9 +2,13 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MapsterIntro", "MapsterIntro\MapsterIntro.csproj", "{A2FE27C7-91ED-4755-A758-779D5040DD41}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitPublisher", "RabbitPublisher\RabbitPublisher.csproj", "{D40773B5-2CB1-45E3-921C-7A37C634777A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitPublisher", "RabbitMq\RabbitPublisher\RabbitPublisher.csproj", "{D40773B5-2CB1-45E3-921C-7A37C634777A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitSubscriber", "RabbitSubscriber\RabbitSubscriber.csproj", "{F9E858A6-B7CD-4C7A-A82A-A78613473952}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitSubscriber", "RabbitMq\RabbitSubscriber\RabbitSubscriber.csproj", "{F9E858A6-B7CD-4C7A-A82A-A78613473952}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RabbitMq", "RabbitMq", "{C376F786-F83E-4D0E-99B7-0B37EB1FDEC0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitMessages", "RabbitMq\RabbitMessages\RabbitMessages.csproj", "{E431A2B6-784C-42E9-AC65-2FFC64F78440}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,5 +28,14 @@ Global
 		{F9E858A6-B7CD-4C7A-A82A-A78613473952}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F9E858A6-B7CD-4C7A-A82A-A78613473952}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F9E858A6-B7CD-4C7A-A82A-A78613473952}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E431A2B6-784C-42E9-AC65-2FFC64F78440}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E431A2B6-784C-42E9-AC65-2FFC64F78440}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E431A2B6-784C-42E9-AC65-2FFC64F78440}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E431A2B6-784C-42E9-AC65-2FFC64F78440}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D40773B5-2CB1-45E3-921C-7A37C634777A} = {C376F786-F83E-4D0E-99B7-0B37EB1FDEC0}
+		{F9E858A6-B7CD-4C7A-A82A-A78613473952} = {C376F786-F83E-4D0E-99B7-0B37EB1FDEC0}
+		{E431A2B6-784C-42E9-AC65-2FFC64F78440} = {C376F786-F83E-4D0E-99B7-0B37EB1FDEC0}
 	EndGlobalSection
 EndGlobal
