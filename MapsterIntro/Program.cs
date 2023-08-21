@@ -5,7 +5,7 @@ using MapsterIntro;
 
 TypeAdapterConfig.GlobalSettings.Scan(AppDomain.CurrentDomain.GetAssemblies());
 Console.WriteLine("Hello, World!");
-
+var test = new FlightBuilder().Generate(5);
 var t = new ModelSource();
 t.AssertNullOrEmpty(obj => obj.NationalId);
 
