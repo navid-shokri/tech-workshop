@@ -1,11 +1,22 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
+using System.Text.RegularExpressions;
 using Mapster;
 using MapsterIntro;
 
 TypeAdapterConfig.GlobalSettings.Scan(AppDomain.CurrentDomain.GetAssemblies());
 Console.WriteLine("Hello, World!");
-var test = new FlightBuilder().Generate(5);
+var flightList = new FlightBuilder().Generate(20);
+
+// group by multiple properties 
+var groups = flightList.GroupBy(x => new { x.FlightNo, x.Origin, x.Destination, x.DepartureDate.Date });
+
+// group by substring 
+var groups2 = flightList.GroupBy(x =>
+{
+    var index = $"{x.Origin}:{x.Destination}:{x.DepartureDate:yyyyMMdd}:".Length;
+    return x.FlightUID().Substring(0, index);
+});
 var t = new ModelSource();
 t.AssertNullOrEmpty(obj => obj.NationalId);
 
