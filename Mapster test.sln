@@ -10,6 +10,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RabbitMq", "RabbitMq", "{C3
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitMessages", "RabbitMq\RabbitMessages\RabbitMessages.csproj", "{E431A2B6-784C-42E9-AC65-2FFC64F78440}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProject", "TestProject\TestProject.csproj", "{08216B96-9844-4245-8DA5-15D955A7532A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageSharpTest", "ImageSharpTest\ImageSharpTest.csproj", "{79F97F32-0416-40FF-BB53-2A4F7DF1092F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,6 +36,14 @@ Global
 		{E431A2B6-784C-42E9-AC65-2FFC64F78440}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E431A2B6-784C-42E9-AC65-2FFC64F78440}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E431A2B6-784C-42E9-AC65-2FFC64F78440}.Release|Any CPU.Build.0 = Release|Any CPU
+		{08216B96-9844-4245-8DA5-15D955A7532A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{08216B96-9844-4245-8DA5-15D955A7532A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{08216B96-9844-4245-8DA5-15D955A7532A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08216B96-9844-4245-8DA5-15D955A7532A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79F97F32-0416-40FF-BB53-2A4F7DF1092F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79F97F32-0416-40FF-BB53-2A4F7DF1092F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79F97F32-0416-40FF-BB53-2A4F7DF1092F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79F97F32-0416-40FF-BB53-2A4F7DF1092F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{D40773B5-2CB1-45E3-921C-7A37C634777A} = {C376F786-F83E-4D0E-99B7-0B37EB1FDEC0}

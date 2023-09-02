@@ -1,6 +1,7 @@
 using Bogus;
+using MapsterIntro;
 
-namespace MapsterIntro;
+namespace TestProject;
 
 public class FlightBuilder : Faker<Flight>
 {
