@@ -22,8 +22,8 @@ public class PersonInfo
 
 public class Course
 {
-    public string CourseTitle { get; set; }
-    public int CourseId { get; set; }
+    public string Title { get; set; }
+    public int Id { get; set; }
 }
 
 public class EducationInfo
@@ -36,4 +36,6 @@ public class Teacher
 {
     public string Name { get; set; }
     public string Family { get; set; }
+    public int  CourseId { get; set; }
+    public Course Course { get; set; }
 }

@@ -24,6 +24,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server", "Server\Server.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Message", "Message\Message.csproj", "{55AFBB48-DAAB-4385-9B4D-76118AB8D284}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NRule", "NRule\NRule.csproj", "{3EF62E46-B4B5-470F-9940-380235CC58B2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp1", "ConsoleApp1\ConsoleApp1.csproj", "{939A3154-1E2D-43AC-A468-04D893478E51}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -70,6 +74,14 @@ Global
 		{55AFBB48-DAAB-4385-9B4D-76118AB8D284}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{55AFBB48-DAAB-4385-9B4D-76118AB8D284}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{55AFBB48-DAAB-4385-9B4D-76118AB8D284}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3EF62E46-B4B5-470F-9940-380235CC58B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3EF62E46-B4B5-470F-9940-380235CC58B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3EF62E46-B4B5-470F-9940-380235CC58B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3EF62E46-B4B5-470F-9940-380235CC58B2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{939A3154-1E2D-43AC-A468-04D893478E51}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{939A3154-1E2D-43AC-A468-04D893478E51}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{939A3154-1E2D-43AC-A468-04D893478E51}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{939A3154-1E2D-43AC-A468-04D893478E51}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{D40773B5-2CB1-45E3-921C-7A37C634777A} = {C376F786-F83E-4D0E-99B7-0B37EB1FDEC0}
