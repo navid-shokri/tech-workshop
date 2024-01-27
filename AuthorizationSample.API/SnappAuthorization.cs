@@ -21,7 +21,7 @@ public class SnappAuthorizationAttribute : Attribute, IAsyncAuthorizationFilter
         var userData = await _authService.IntrospectTokenAsync(token);
         if (userData == null || !userData.Active)
         {
-            context.Result = new ForbidResult();
+            context.Result = new UnauthorizedResult();
         }
 
         context.HttpContext.Items["User"] = userData;
