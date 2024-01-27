@@ -5,7 +5,7 @@ namespace TestProject;
 
 public class FlightBuilder : Faker<Flight>
 {
-    public FlightBuilder()
+    /*public FlightBuilder()
     {
         this.Rules((faker, flight) =>
         {
@@ -20,5 +20,5 @@ public class FlightBuilder : Faker<Flight>
             flight.DepartureDate = faker.Date.Between(DateTime.Now, DateTime.Now.AddDays(3));
             flight.FareType = faker.Random.Char('A', 'Z').ToString();
         });
-    }
+    }*/
 }
