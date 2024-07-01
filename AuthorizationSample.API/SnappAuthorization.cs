@@ -17,7 +17,6 @@ public class SnappAuthorizationAttribute : Attribute, IAsyncAuthorizationFilter
     public async Task OnAuthorizationAsync(AuthorizationFilterContext context)
     {
         var token = context.HttpContext.Request.Headers["Authorization"].FirstOrDefault();
-        var accessToken = token?.Split(" ")[1];
         var userData = await _authService.IntrospectTokenAsync(token);
         if (userData == null || !userData.Active)
         {

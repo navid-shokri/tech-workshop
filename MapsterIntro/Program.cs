@@ -1,5 +1,6 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
+using System.Diagnostics;
 using System.Globalization;
 using System.Runtime.InteropServices.JavaScript;
 using System.Text;
@@ -7,7 +8,55 @@ using System.Text.RegularExpressions;
 using Mapster;
 using MapsterIntro;
 
-TypeAdapterConfig.GlobalSettings.Scan(AppDomain.CurrentDomain.GetAssemblies());
+var start1 = Stopwatch.StartNew();
+var t1 = RandomsString();
+var t2 = RandomPow();
+
+//var t = await Task.WhenAll(t2, t1).ContinueWith().Unwrap();
+start1.Stop();
+//Console.WriteLine("1:" +start1.Elapsed.TotalSeconds);
+//Console.WriteLine($"Final Result id {t}");
+async Task<int> RandomBase()
+{
+    await Task.Delay(4000);
+    Console.WriteLine("salam");
+    return new Random().Next(0,5);
+}
+
+async Task<string> RandomsString()
+{
+    await Task.Delay(6000);
+    return "abc";
+}
+
+async Task<string> CalcString(int times, string str)
+{
+    await Task.Delay(2500);
+    for (int i = 0; i < times; i++)
+    {
+        str+=str;
+    }
+
+    return str;
+}
+
+async Task<int> RandomPow()
+{
+    await Task.Delay(2000);
+    Console.WriteLine("Chetori");
+    return new Random().Next(0,4);
+}
+
+async Task<double> Calculate(params int[] nums)
+{
+    await Task.Delay(3000);
+    Console.WriteLine($"params where: {nums[0]}, {nums[1]} ");
+    return Math.Pow(nums[0], nums[1]);
+}
+
+
+/*TypeAdapterConfig.GlobalSettings.Scan(AppDomain.CurrentDomain.GetAssemblies());
+/*
 Console.WriteLine("Hello, World!");
 
 var f = Flight.GetBuilder()
@@ -16,18 +65,29 @@ var f = Flight.GetBuilder()
 
 var t111 = Flight.GetBuilder().SetBaseInfo("", "", DateTime.Now, "")
     .SetPricing(1000, 750, 400).Build();
+    #1#
+
+var listp = new List<Person<int>>
+{
+    new Person<int>{ Name = "Navid", Family = "Shokri", BirthDay = DateTime.Now.Date.AddYears(35)},
+    new Person<int>{ Name = "Vahid", Family = "Shokri", BirthDay = DateTime.Now.Date.AddYears(37)}
+};
+
+var o = listp.Adapt<List<PersonDto>>();
+
+Console.WriteLine(o.Count);
 
 //var flightList = new FlightBuilder().Generate(20);
 
-// group by multiple properties 
+// group by multiple properties
 //var groups = flightList.GroupBy(x => new { x.FlightNo, x.Origin, x.Destination, x.DepartureDate.Date });
 
-// group by substring 
+// group by substring
 /*var groups2 = flightList.GroupBy(x =>
 {
     var index = $"{x.Origin}:{x.Destination}:{x.DepartureDate:yyyyMMdd}:".Length;
     return x.FlightUID().Substring(0, index);
-});*/
+});#1#
 /*var ti9 = DateTime.ParseExact("20191015", "yyyyMMdd", new DateTimeFormatInfo());
 var t = new ModelSource();
 t.AssertNullOrEmpty(obj => obj.NationalId);
@@ -67,7 +127,7 @@ Console.WriteLine($"--{dst.Family} {dst.Name}--");
 Console.WriteLine($"--{string.Join("-", dst.CourseNames)}--");
 Console.WriteLine($"**{ dst.DocInfo.SSId} {dst.DocInfo.IssuedIn}**");
 Console.WriteLine($"**{ dst.Instructor.FirstName} {dst.Instructor.LastName}**");
-Console.WriteLine($"++{dst.BestFriendName}++");*/
+Console.WriteLine($"++{dst.BestFriendName}++");#1#
 
 /*var persons = new List<Person>
 {
@@ -76,7 +136,7 @@ Console.WriteLine($"++{dst.BestFriendName}++");*/
   new Person{Name = "ali", Family = "shokri", BirthDay = new DateTime(1988,4,26)}
 };
 
-var personDtos = persons.Adapt<List<PersonDto>>() ;*/
+var personDtos = persons.Adapt<List<PersonDto>>() ;#1#
 
 List<Teacher> teachers = new List<Teacher>
 {
@@ -119,7 +179,7 @@ var t = new Teacher
 };
 
 //Console.WriteLine(getType(p));
-Console.WriteLine(p.Family);*/
+Console.WriteLine(p.Family);
 if (true) { Console.WriteLine("test"); }
 
 public class CourseView
@@ -127,4 +187,4 @@ public class CourseView
     public string Name { get; set; }
     public string Family { get; set; }
     public string CourseTitle { get; set; }
-}
+}*/

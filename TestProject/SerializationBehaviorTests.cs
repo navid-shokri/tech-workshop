@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using System.Text.Json;
 using MapsterIntro;
 
@@ -5,7 +6,7 @@ namespace TestProject;
 
 public class UnitTest1
 {
-    [Fact]
+/*    [Fact]
     public void PrivatePropertyWithDefaultValueProvider()
     {
         //arrange
@@ -20,5 +21,65 @@ public class UnitTest1
         Assert.Equal(expected.Name, actual.Name);
         Assert.Equal(expected.Family, actual.Family);
 
+    }
+
+    [Fact]
+    public void test()
+    {
+        var t = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+        Assert.Equal(t, "Testing");
+    }
+
+    [Fact]
+    public Task Test1()
+    {
+        //https://www.literotica.com/s/my-swap-with-mom-ch-03
+        
+        try
+        {
+            Amadeus amadeus = Amadeus
+                .builder("REPLACE_BY_YOUR_API_KEY", "REPLACE_BY_YOUR_API_SECRET")
+                .build();
+
+            Console.WriteLine("Get Check-in links:");
+            CheckinLink[] checkinLinks = amadeus.referenceData.urls.checkinLinks.get(Params
+                .with("airlineCode", "BA"));
+
+            Console.WriteLine(checkinLinks[0].response.data);
+
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("ERROR: " + e.ToString());
+        }
+    }*/
+
+    [Fact]
+    public void test()
+    {
+        var containers = new List<Container>
+        {
+            new Container
+            {
+                Name = nameof(Math.Min),
+                Content = new List<Content>()
+                {
+                    new Content{Departure = DateTime.Now.AddDays(2)},
+                    new Content{Departure = DateTime.Now.AddDays(5)},
+                }
+            }, 
+            new Container
+            {
+                Name = nameof(Math.Max),
+                Content = new List<Content>
+                {
+                    new Content{Departure = DateTime.Now.AddDays(7)},
+                    new Content{Departure = DateTime.Now.AddDays(3)}
+                }
+            }
+        };
+
+        var min = containers.MinBy(x => x.Content.MinBy(y => y.Departure));
+        var t = min.Name;
     }
 }
