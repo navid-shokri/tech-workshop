@@ -12,7 +12,13 @@ public class Person : BaseEntity
         Family = family;
         
     }
-    
+
+    public void SetPersonalInfo(string name, string family )
+    {
+        Name = name;
+        Family = family;
+    }
+
     public void AddOrder(Order order)
     {
         _orders.Add(order);
@@ -43,8 +49,8 @@ public class Person : BaseEntity
     }
 
     public Address Address { get; set; }
-    public string Name { get; set; }
-    public string Family { get; set; }
+    public string Name { get; private set; }
+    public string Family { get; private set; }
     private List<History> _histories = new List<History>();
 
     private List<Order> _orders = new List<Order>();

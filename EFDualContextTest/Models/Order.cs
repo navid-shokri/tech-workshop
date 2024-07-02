@@ -2,6 +2,10 @@ namespace EFDualContextTest.Models;
 
 public class Order : BaseEntity
 {
+    public Order(long totalPrice)
+    {
+        TotalPrice = totalPrice;
+    }
     //v1
     public Person Owner { get; private set; }
 
@@ -12,7 +16,7 @@ public class Order : BaseEntity
 
     //v2
     //--
-    public long TotalPrice { get; set; }
+    public long TotalPrice { get; private set; }
     protected override void Validate()
     {
         

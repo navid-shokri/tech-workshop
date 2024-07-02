@@ -37,19 +37,10 @@ public class WeatherForecastController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<Guid>> CreatePerson()
     {
-        Person person = new Person("navid", "shokri"); 
-        person.AddOrder(new Order
-        {
-            TotalPrice = 200
-        });
-        person.AddOrder(new Order
-        {
-            TotalPrice = 300
-        });
-        person.AddOrder(new Order
-        {
-            TotalPrice = 400
-        });
+        Person person = new Person("navid", "shokri");
+        person.AddOrder(new Order(200));
+        person.AddOrder(new Order(300));
+        person.AddOrder(new Order(400));
         await _personRepository.AddAsync(person);
         return Ok(person.Id);
     }
@@ -67,11 +58,7 @@ public class WeatherForecastController : ControllerBase
     {
         var id = Guid.NewGuid();
         var person= await _personRepository.GetByIdAsync(personId);
-        person.AddOrder(new Order
-        {
-            TotalPrice = Random.Shared.Next(1000, 1555),
-            Id = id
-        });
+        person.AddOrder(new Order(Random.Shared.Next(1000, 1555)));
         await _personRepository.UpdateAsync(person);
         return Ok(id);
     }
@@ -80,8 +67,7 @@ public class WeatherForecastController : ControllerBase
     public async Task<ActionResult<Guid>> SetAddress([FromRoute] Guid personId)
     {
         var person = await _personRepository.GetByIdAsync(personId);
-        person.Name = "Name" + Random.Shared.Next(1, 1000);
-        person.Family = "Family" + Random.Shared.Next(1, 1000);
+        person.SetPersonalInfo("Name" + Random.Shared.Next(1, 1000),"Family" + Random.Shared.Next(1, 1000));
         person.SetAddress(" Iran", $"amnesia alley {DateTime.Now.Minute}-{DateTime.Now.Minute}");
         await _personRepository.UpdateAsync(person);
         return Ok();
