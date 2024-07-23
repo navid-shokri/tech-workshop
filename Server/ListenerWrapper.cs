@@ -1,4 +1,5 @@
 using EasyNetQ;
+using Message;
 
 namespace Server;
 
@@ -11,13 +12,20 @@ public class ListenerWrapper
         _bus = bus;
     }
 
-    public Task RegisterReceiveAsync<T>(string queueName, Func<T, CancellationToken, Task> handler)
+    public async Task RegisterReceiveAsync()
     {
-        return _bus.SendReceive.ReceiveAsync("my.command", registration =>
-            registration.Add<T>(async (command, cancellationToken) =>
+        await _bus.Rpc.RespondAsync<Command,Result>((command, cancellationToken) =>
+        {
+            if (command.Id % 3 == 0)
             {
-                await handler(command, cancellationToken);
-            })
-        );
+                throw new Exception("Opppssss!!!");
+            }
+
+            return Task.FromResult(new Result { Data = $"{command.Name}|{command.Family}|{command.Id}" });
+        }, 
+            config =>
+        {
+            config.WithQueueName(nameof(Command));
+        });
     }
 }

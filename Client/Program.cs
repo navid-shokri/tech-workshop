@@ -5,7 +5,8 @@ using EasyNetQ;
 using Message;
 
 Console.WriteLine("Hello, World!");
-var bus = RabbitHutch.CreateBus("username=user;password=password;virtualHost=/;host=localhost:5672");
+var bus = RabbitHutch.CreateBus("username=user;password=password;virtualHost=/;host=127.0.0.1:5672");
+
 var exit = "";
 /*while (true || exit.ToLower().StartsWith('y'))
 {
@@ -21,17 +22,31 @@ var exit = "";
     exit = Console.ReadLine();
     
 }*/
-int i = 0; 
+int i = 0;
 while (i < 100)
 {
-    var command = new Command
+    try
     {
-        Family = "test" + i ,
-        Name = "test" + i 
-    };
-    await bus.SendReceive.SendAsync("my.command", command);
+        var command = new Command
+        {
+            Id = i,
+            Family = "test" + i,
+            Name = "test" + i
+        };
 
-    await Task.Delay(2000);
+        var response = await bus.Rpc.RequestAsync<Command, Result>(command,
+            configuration =>
+            {
+                configuration.WithQueueName(nameof(Command)).WithExpiration(TimeSpan.FromSeconds(10));
+            });
+        Console.WriteLine(response.Data);
+        await Task.Delay(2000);
+        
+
+    }
+    catch (Exception e)
+    {
+        Console.WriteLine(e);
+    }
     i++;
-
 }

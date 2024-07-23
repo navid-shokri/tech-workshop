@@ -32,6 +32,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EFDualContextTest", "EFDual
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mediatorsss", "Mediatorsss\Mediatorsss.csproj", "{7BE04B5C-D817-473F-832B-7A84E609C9EE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RuleEngine", "RuleEngine\RuleEngine.csproj", "{DE9ECA6A-9BD3-4E0C-BB10-4C21E5CF264B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -94,6 +96,10 @@ Global
 		{7BE04B5C-D817-473F-832B-7A84E609C9EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7BE04B5C-D817-473F-832B-7A84E609C9EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7BE04B5C-D817-473F-832B-7A84E609C9EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE9ECA6A-9BD3-4E0C-BB10-4C21E5CF264B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE9ECA6A-9BD3-4E0C-BB10-4C21E5CF264B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE9ECA6A-9BD3-4E0C-BB10-4C21E5CF264B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE9ECA6A-9BD3-4E0C-BB10-4C21E5CF264B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{D40773B5-2CB1-45E3-921C-7A37C634777A} = {C376F786-F83E-4D0E-99B7-0B37EB1FDEC0}

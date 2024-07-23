@@ -13,7 +13,8 @@ public class OrderDbContext : DbContext
     public DbSet<Person> Persons { get; set; }
     public DbSet<Order> Orders { get; set; }
     public DbSet<History> Histories { get; set; }
-    
+    public DbSet<PaymentType> PaymentTypes { get; set; }
+
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -38,6 +39,9 @@ public class OrderDbContext : DbContext
                 builder.Property(o => o.City).HasColumnName("City").IsRequired(false);
                 builder.Property(o => o.Street).HasColumnName("Street").IsRequired(false);
             });
+
+        modelBuilder.Entity<PaymentType>().UseTphMappingStrategy();
+
         /*modelBuilder.Entity<Person>()
             .HasMany<History>(x => x.Histories)
             .WithOne()

@@ -1,14 +1,20 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
 using EasyNetQ;
-using Message;
+using EasyNetQ.Consumer;
+using EasyNetQ.DI;
 using Server;
 
 Console.WriteLine("Hello, World!");
 
-var bus = RabbitHutch.CreateBus("username=user;password=password;virtualHost=/;host=localhost:5672");
+var bus = RabbitHutch.CreateBus("username=user;password=password;virtualHost=/;host=127.0.0.1:5672",
+    register =>
+    {
+        //register.EnableConsoleLogger();
+        register.Register<IConsumerErrorStrategy,LoggerErrorStrategy>();
+    });
 var lw = new ListenerWrapper(bus);
-var w = new Worker();
-await lw.RegisterReceiveAsync<Command>("my.command", async (command, token) => await w.HandleCommand(command, token));
+var bg = new MyBackgroundWorker(lw);
+await bg.StartAsync(CancellationToken.None);
 Console.WriteLine("Listening to commands. press enter to exit...");
 Console.ReadLine();

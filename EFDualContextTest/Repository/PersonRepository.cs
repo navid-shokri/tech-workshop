@@ -42,20 +42,20 @@ public class PersonRepository : GenericRepository<OrderDbContext, Person>, IPers
         DbContext.Entry(person).Reference(x=>x.Address).CurrentValue 
             = new Address(entity.Address.City, entity.Address.Street);
         foreach (var order in entity.Orders)
-        {
-            if (person.Orders.All(x => x.Id != order.Id))
-            {
-                DbContext.Entry(order).State = EntityState.Added;
-            }
-        }
-
-        foreach (var eOrder in person.Orders)
-        {
-            if (entity.Orders.All(x => x.Id != eOrder.Id))
-            {
-                DbContext.Entry(eOrder).State = EntityState.Deleted;
-            }
-        }
+                 {
+                     if (person.Orders.All(x => x.Id != order.Id))
+                     {
+                         DbContext.Entry(order).State = EntityState.Added;
+                     }
+                 }
+         
+                 foreach (var eOrder in person.Orders)
+                 {
+                     if (entity.Orders.All(x => x.Id != eOrder.Id))
+                     {
+                         DbContext.Entry(eOrder).State = EntityState.Deleted;
+                     }
+                 }
         foreach (var his in entity.Histories)
         {
             if (person.Histories.All(x => x.Id != his.Id))
