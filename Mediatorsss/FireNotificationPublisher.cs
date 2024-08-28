@@ -2,7 +2,7 @@ using Mediator;
 
 namespace Mediatorsss;
 
-public class FireNotificationPublisher: Mediator.INotificationPublisher
+public class FireNotificationPublisher//: Mediator.INotificationPublisher
 {
     
 }

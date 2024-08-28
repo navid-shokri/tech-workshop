@@ -13,6 +13,7 @@ public class Content : IComparable<Content>
 
     public int CompareTo(Content? other)
     {
+        int? i = 10;
         if (ReferenceEquals(this, other)) return 0;
         if (ReferenceEquals(null, other)) return 1;
         return Departure.CompareTo(other.Departure);

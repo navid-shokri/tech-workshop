@@ -82,4 +82,41 @@ public class UnitTest1
         var min = containers.MinBy(x => x.Content.MinBy(y => y.Departure));
         var t = min.Name;
     }
+
+    [Fact]
+    public void test1()
+    {
+        var list = new List<Person>()
+        {
+            new Person{Name = "test1", Family = "testii", Id = Guid.NewGuid()},
+            new Person{Name = "test2", Family = "testipoor", Id = Guid.NewGuid()},
+            //new Person{Name = "Bita", Family = "Hoseynkhani", Id = Guid.NewGuid()},
+        };
+        var list1 = new List<Person>()
+        {
+            new Person{Name = "test1", Family = "testii", Id = Guid.NewGuid()},
+            new Person{Name = "test2", Family = "testipoor", Id = Guid.NewGuid()},
+        };
+
+        var e = list.Except(list1).ToList();
+        var e1 = list1.Except(list).ToList();
+        Assert.Empty(e1);
+        Assert.Empty(e);
+        
+    }
+
+    [Fact]
+    public void test2()
+    {
+        var n = new Person { Name = "Navid", Family = "shokri", Id = Guid.NewGuid() };
+        var n1 = new Person { Name = "Navid", Family = "shokri", Id = Guid.NewGuid() };
+        var a = new Person { Name = "Ali", Family = "Darvish", Id = Guid.NewGuid() };
+        var b = new Person { Name = "Bita", Family = "Hoseynkhani", Id = Guid.NewGuid() };
+
+        Assert.True(n == n1);
+        Assert.False(n == a);
+        Assert.False(n == b);
+        
+     
+    }
 }

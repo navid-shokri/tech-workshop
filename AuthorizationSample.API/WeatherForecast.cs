@@ -10,3 +10,12 @@ public class WeatherForecast
 
     public string? Summary { get; set; }
 }
+
+public enum Weather
+{
+    Sunny, 
+    Cloudy,
+    Foggy,
+    Rainy,
+    Snowy
+}

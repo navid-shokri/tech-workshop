@@ -1,14 +1,21 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
 using System.Diagnostics;
-using System.Globalization;
-using System.Runtime.InteropServices.JavaScript;
-using System.Text;
-using System.Text.RegularExpressions;
 using Mapster;
 using MapsterIntro;
 
-var start1 = Stopwatch.StartNew();
+TypeAdapterConfig.GlobalSettings.Scan(AppDomain.CurrentDomain.GetAssemblies());
+var rq = new request
+{
+    Weather = "Sunny",
+    Temp = 20
+};
+
+//var h = rq.Weather.GetEnumByAttributeValue<Weather>();
+var c = rq.Adapt<command>();
+var r = c.Adapt<request>();
+Console.WriteLine(c.Temp);
+/*var start1 = Stopwatch.StartNew();
 var t1 = RandomsString();
 var t2 = RandomPow();
 
@@ -55,7 +62,7 @@ async Task<double> Calculate(params int[] nums)
 }
 
 
-/*TypeAdapterConfig.GlobalSettings.Scan(AppDomain.CurrentDomain.GetAssemblies());
+/*
 /*
 Console.WriteLine("Hello, World!");
 
@@ -65,7 +72,7 @@ var f = Flight.GetBuilder()
 
 var t111 = Flight.GetBuilder().SetBaseInfo("", "", DateTime.Now, "")
     .SetPricing(1000, 750, 400).Build();
-    #1#
+    #2#
 
 var listp = new List<Person<int>>
 {
@@ -87,7 +94,7 @@ Console.WriteLine(o.Count);
 {
     var index = $"{x.Origin}:{x.Destination}:{x.DepartureDate:yyyyMMdd}:".Length;
     return x.FlightUID().Substring(0, index);
-});#1#
+});#2#
 /*var ti9 = DateTime.ParseExact("20191015", "yyyyMMdd", new DateTimeFormatInfo());
 var t = new ModelSource();
 t.AssertNullOrEmpty(obj => obj.NationalId);
@@ -127,7 +134,7 @@ Console.WriteLine($"--{dst.Family} {dst.Name}--");
 Console.WriteLine($"--{string.Join("-", dst.CourseNames)}--");
 Console.WriteLine($"**{ dst.DocInfo.SSId} {dst.DocInfo.IssuedIn}**");
 Console.WriteLine($"**{ dst.Instructor.FirstName} {dst.Instructor.LastName}**");
-Console.WriteLine($"++{dst.BestFriendName}++");#1#
+Console.WriteLine($"++{dst.BestFriendName}++");#2#
 
 /*var persons = new List<Person>
 {
@@ -136,7 +143,7 @@ Console.WriteLine($"++{dst.BestFriendName}++");#1#
   new Person{Name = "ali", Family = "shokri", BirthDay = new DateTime(1988,4,26)}
 };
 
-var personDtos = persons.Adapt<List<PersonDto>>() ;#1#
+var personDtos = persons.Adapt<List<PersonDto>>() ;#2#
 
 List<Teacher> teachers = new List<Teacher>
 {
@@ -187,4 +194,5 @@ public class CourseView
     public string Name { get; set; }
     public string Family { get; set; }
     public string CourseTitle { get; set; }
-}*/
+}#1#
+*/

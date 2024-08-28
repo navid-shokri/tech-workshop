@@ -16,14 +16,18 @@ public class WeatherForecastController : ControllerBase
     };
 
     private readonly IPersonRepository _personRepository;
+    private readonly IProductRepository _productRepository;
+    private readonly ISellerRepository _sellerRepository;
     private readonly OrderDbContext _dbContext;
     private readonly ILogger<WeatherForecastController> _logger;
 
-    public WeatherForecastController(IPersonRepository personRepository, OrderDbContext dbContext, ILogger<WeatherForecastController> logger)
+    public WeatherForecastController(IPersonRepository personRepository, OrderDbContext dbContext, ILogger<WeatherForecastController> logger, ISellerRepository sellerRepository, IProductRepository productRepository)
     {
         _personRepository = personRepository;
         _dbContext = dbContext;
         _logger = logger;
+        _sellerRepository = sellerRepository;
+        _productRepository = productRepository;
     }
 
     [HttpDelete]
@@ -81,5 +85,32 @@ public class WeatherForecastController : ControllerBase
         person.RemoveOrder(orderid);
         await _personRepository.UpdateAsync(person);
         return Ok(person.Id);
+    }
+    
+    
+    [HttpPost("product")]
+    public async Task<ActionResult<Guid>> AddProduct()
+    {
+        var product = new Product
+        {
+            Title = "Product1",
+            Price = 1200
+        }; 
+        await _productRepository.AddAsync(product);
+        return Ok(product.Id);
+    }
+    
+    [HttpPost("seller/{productId:guid}")]
+    public async Task<ActionResult<Guid>> AddSeller([FromRoute] Guid productId)
+    {
+        var product = await _productRepository.GetByIdAsync(productId);
+        var seller = new Seller
+        {
+            Address = "shahmirzad",
+            Product = product,
+            ProductId = productId
+        };
+        await _sellerRepository.AddAsync(seller);
+        return Ok(product.Id);
     }
 }

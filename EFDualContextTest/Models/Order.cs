@@ -7,7 +7,7 @@ public class Order : BaseEntity
         TotalPrice = totalPrice;
     }
     //v1
-    public Person Owner { get; private set; }
+    public Person? Owner { get; private set; }
 
     public void SetOwner(Person person)
     {

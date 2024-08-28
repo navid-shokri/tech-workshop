@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
 using EFDualContextTest.DataAccess;
+using EFDualContextTest.Models;
 using EFDualContextTest.Repository;
 using Microsoft.EntityFrameworkCore;
 
@@ -21,6 +22,9 @@ builder.Services.AddDbContext<OrderDbContext>(optionsBuilder =>
     optionsBuilder.UseMySql(constr,  ServerVersion.AutoDetect(constr));
 });
 builder.Services.AddTransient<IPersonRepository, PersonRepository>();
+builder.Services.AddTransient<ISellerRepository, SellerRepository>();
+builder.Services.AddTransient<IProductRepository, ProductRepository>();
+
 /*builder.Services.AddDbContext<ProductDbContext>(optionsBuilder =>
 {
     optionsBuilder.UseSqlServer(builder.Configuration["ConnectionStrings__ProductDatabase"]);
