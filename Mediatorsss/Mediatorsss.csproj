@@ -6,12 +6,19 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="Enexure.MicroBus" Version="3.7.0" />
+      <PackageReference Include="Enexure.MicroBus.MicrosoftDependencyInjection" Version="3.7.0" />
       <PackageReference Include="Mediator.Abstractions" Version="2.1.7" />
       <PackageReference Include="Mediator.SourceGenerator" Version="2.1.7">
         <PrivateAssets>all</PrivateAssets>
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>
+      <PackageReference Include="MediatR" Version="12.5.0" />
       <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\ClassLibrary1\ClassLibrary1.csproj" />
     </ItemGroup>
 
 </Project>

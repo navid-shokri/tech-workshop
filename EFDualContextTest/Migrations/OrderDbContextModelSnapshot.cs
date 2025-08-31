@@ -19,6 +19,57 @@ namespace EFDualContextTest.Migrations
                 .HasAnnotation("ProductVersion", "7.0.18")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
+            modelBuilder.Entity("AuthorBook", b =>
+                {
+                    b.Property<Guid>("AuthorsId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid>("BooksId")
+                        .HasColumnType("char(36)");
+
+                    b.HasKey("AuthorsId", "BooksId");
+
+                    b.HasIndex("BooksId");
+
+                    b.ToTable("AuthorBook");
+                });
+
+            modelBuilder.Entity("EFDualContextTest.Models.Author", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Authors");
+                });
+
+            modelBuilder.Entity("EFDualContextTest.Models.Book", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Books");
+                });
+
             modelBuilder.Entity("EFDualContextTest.Models.History", b =>
                 {
                     b.Property<Guid>("Id")
@@ -122,13 +173,23 @@ namespace EFDualContextTest.Migrations
                     b.Property<int>("Price")
                         .HasColumnType("int");
 
+                    b.Property<Guid?>("SellerId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid?>("SellerId1")
+                        .HasColumnType("char(36)");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("longtext");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Products");
+                    b.HasIndex("SellerId");
+
+                    b.HasIndex("SellerId1");
+
+                    b.ToTable("ann_dar_product", (string)null);
                 });
 
             modelBuilder.Entity("EFDualContextTest.Models.Seller", b =>
@@ -153,14 +214,24 @@ namespace EFDualContextTest.Migrations
                     b.Property<DateTime?>("ModifiedAt")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<Guid>("ProductId")
-                        .HasColumnType("char(36)");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("ProductId");
-
                     b.ToTable("Sellers");
+                });
+
+            modelBuilder.Entity("AuthorBook", b =>
+                {
+                    b.HasOne("EFDualContextTest.Models.Author", null)
+                        .WithMany()
+                        .HasForeignKey("AuthorsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EFDualContextTest.Models.Book", null)
+                        .WithMany()
+                        .HasForeignKey("BooksId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("EFDualContextTest.Models.History", b =>
@@ -208,15 +279,15 @@ namespace EFDualContextTest.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("EFDualContextTest.Models.Seller", b =>
+            modelBuilder.Entity("EFDualContextTest.Models.Product", b =>
                 {
-                    b.HasOne("EFDualContextTest.Models.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("EFDualContextTest.Models.Seller", null)
+                        .WithMany("Product")
+                        .HasForeignKey("SellerId");
 
-                    b.Navigation("Product");
+                    b.HasOne("EFDualContextTest.Models.Seller", null)
+                        .WithMany()
+                        .HasForeignKey("SellerId1");
                 });
 
             modelBuilder.Entity("EFDualContextTest.Models.Person", b =>
@@ -224,6 +295,11 @@ namespace EFDualContextTest.Migrations
                     b.Navigation("Histories");
 
                     b.Navigation("Orders");
+                });
+
+            modelBuilder.Entity("EFDualContextTest.Models.Seller", b =>
+                {
+                    b.Navigation("Product");
                 });
 #pragma warning restore 612, 618
         }

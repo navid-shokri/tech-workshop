@@ -103,14 +103,29 @@ public class WeatherForecastController : ControllerBase
     [HttpPost("seller/{productId:guid}")]
     public async Task<ActionResult<Guid>> AddSeller([FromRoute] Guid productId)
     {
-        var product = await _productRepository.GetByIdAsync(productId);
+        var sid = Guid.NewGuid();
+        var pid = Guid.NewGuid();
+        var product = new Product()
+        {
+            Id = pid,
+            Price = 1000000,
+            Title = "khooz"
+        };
         var seller = new Seller
         {
             Address = "shahmirzad",
-            Product = product,
-            ProductId = productId
+            Product = new List<Product>(){product},
         };
         await _sellerRepository.AddAsync(seller);
-        return Ok(product.Id);
+        return Ok(seller);
     }
+    
+    
+    [HttpGet("seller/{id:guid}")]
+    public async Task<ActionResult<Guid>> GetFullSeller([FromRoute] Guid id, [FromRoute] Guid orderid)
+    {
+        var seller = await _sellerRepository.GetByIdAsync(id);
+        return Ok(seller);
+    }
+    
 }

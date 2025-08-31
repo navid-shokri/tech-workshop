@@ -1,15 +1,15 @@
 using System;
-using System.Threading;
 using System.Threading.Tasks;
-using Mediator;
+using Enexure.MicroBus;
 
 namespace Mediatorsss;
 
-public class PingHandler : INotificationHandler<Ping>
+public class PingHandler : IMessageHandler<Ping,int>
 {
-    public ValueTask Handle(Ping notification, CancellationToken cancellationToken)
+
+    public Task<int> Handle(Ping message)
     {
         Console.WriteLine("Ping arrived!!!");
-        return new ValueTask();
+        return Task.FromResult(1);
     }
 }

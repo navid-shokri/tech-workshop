@@ -10,6 +10,8 @@ public class OrderDbContext : DbContext
         
     }
 
+    public DbSet<Author> Authors { get; set; }
+    public DbSet<Book> Books { get; set; }
     public DbSet<Person> Persons { get; set; }
     public DbSet<Order> Orders { get; set; }
     public DbSet<History> Histories { get; set; }
@@ -23,12 +25,8 @@ public class OrderDbContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
         //v1
-        /*modelBuilder.Entity<Person>()
-            .HasMany(x=>x.Orders)
-            .WithOne(o=>o.Owner)
-            .OnDelete(DeleteBehavior.SetNull)
-            .HasForeignKey("OwnerId")
-            .Metadata.DependentToPrincipal?.SetPropertyAccessMode(PropertyAccessMode.Field);*/
+        modelBuilder.Entity<Author>().HasQueryFilter(x=>!x.IsDeleted).HasMany(x => x.Books).WithMany(b=>b.Authors);
+        modelBuilder.Entity<Book>().HasQueryFilter(x=>!x.IsDeleted).HasMany(x => x.Authors).WithMany(a=>a.Books);
         
         //v2
         modelBuilder.Entity<Person>()
@@ -43,14 +41,14 @@ public class OrderDbContext : DbContext
                 builder.Property(o => o.Street).HasColumnName("Street").IsRequired(false);
             });
 
-        /*
-        modelBuilder.Entity<Seller>().Property(x=>x.ProductId).HasColumnName("ProductId");
-        modelBuilder.Entity<Product>().HasMany<Seller>()
-            .WithOne()
-            .HasForeignKey(x => x.ProductId);
-            */
 
-        
+
+        modelBuilder.Entity<Seller>().HasMany<Product>()
+            .WithOne();
+
+        modelBuilder.Entity<Product>().ToTable("ann_dar_product");
+
+
         /*modelBuilder.Entity<Person>()
             .HasMany<History>(x => x.Histories)
             .WithOne()

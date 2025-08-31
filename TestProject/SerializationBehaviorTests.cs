@@ -1,5 +1,7 @@
+using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
+using GeoCoordinatePortable;
 using MapsterIntro;
 
 namespace TestProject;
@@ -119,4 +121,144 @@ public class UnitTest1
         
      
     }
+
+
+    [Fact]
+    public void test3()
+    {
+        var n = new Person { Name = "Navid", Family = "shokri", Id = Guid.NewGuid() };
+        var n1 = new Person { Name = "Navid", Family = "shokriz", Id = Guid.NewGuid() };
+        var o = new List<Person> {n, n1 };
+        var a = new Person { Name = "Ali", Family = "Darvish", Id = Guid.NewGuid() };
+        var b = new Person { Name = "Bita", Family = "Hoseynkhani", Id = Guid.NewGuid() };
+        var o1 = new List<Person> {a, b };
+
+        var t = o.Union(o1);
+        
+        Assert.True(t.Count()==4);
+        
+    }
+
+    [Fact]
+    public void an()
+    {
+        var o = new GeoCoordinate(35.773201010473365,51.43544002089096);
+        var S = new GeoCoordinate(35.7733658457994,51.43112200000003);
+        var g = S.GetDistanceTo(o);
+        Assert.Equal(g, 10);
+    }
+
+    [Fact]
+    public void test5()
+    {
+        var span = TimeSpan.FromMilliseconds(123456);
+        var t = span.TotalSeconds.ToString("0.000", CultureInfo.InvariantCulture);
+        Assert.Equal("123.456", t);
+    }
+    
+    [Fact]
+        public void Asghar()
+        {
+            var x = AnAgha(0, 0);
+            var p = x.Value.x1 + 6;
+        }
+    
+        public (double x1, double x2)? AnAgha(int x1, int x2)
+        {
+            if (x1 == 0 || x2 == 0)
+            {
+                return null;
+            }
+    
+            return (1, 4);
+        }
+
+        [Fact]
+        public void oooo()
+        {
+            var c = new c()
+            {
+                bs = new List<b>
+                {
+                    new b()
+                    {
+                        name = "b1",
+                        a_s = new List<a>
+                        {
+                            new a()
+                            {
+                                Date = DateTime.Today.AddDays(7),
+                            },
+                            new a()
+                            {
+                                Date = DateTime.Today.AddDays(2),
+                            },
+                            new a()
+                            {
+                                Date = DateTime.Today.AddDays(-1),
+                            }
+                        }
+                    },
+                    new b()
+                    {
+                        name = "b2",
+                        a_s = new List<a>
+                        {
+                            new a()
+                            {
+                                Date = DateTime.Today,
+                            },
+                            new a()
+                            {
+                                Date = DateTime.Today.AddDays(4),
+                            },
+                            new a()
+                            {
+                                Date = DateTime.Today.AddDays(-2),
+                            }
+                        }
+                    },
+                    new b()
+                    {
+                        name = "b3",
+                        a_s = new List<a>
+                        {
+                            new a()
+                            {
+                                Date = DateTime.Today.AddDays(10),
+                            },
+                            new a()
+                            {
+                                Date = DateTime.Today.AddDays(3),
+                            },
+                            new a()
+                            {
+                                Date = DateTime.Today.AddDays(-4),
+                            }
+                        }
+                    }
+                }
+            };
+            var ff = c.bs.First();
+            c.bs.Sort((x, y) => DateTime.Compare(x.a_s.MinBy(t=>t.Date).Date,y.a_s.MinBy(t=>t.Date).Date));
+            var e = c.bs.First();
+            Assert.False(e.name != ff.name);
+        }
+
+        class a
+        {
+            public DateTime Date { get; set; }
+        }
+
+        class b
+        {
+            public string name { get; set; }
+            public List<a> a_s { get; set; }
+        }
+
+        class c
+        {
+            public List<b> bs { get; set; }
+        }
+
 }

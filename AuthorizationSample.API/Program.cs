@@ -1,32 +1,37 @@
-using System.Text.Json.Serialization;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using AuthorizationSample.API;
+using EasyNetQ;
+using Winton.Extensions.Configuration.Consul;
+using Winton.Extensions.Configuration.Consul.Parsers;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
+builder.Services.AddHttpClient("whatsapp", client =>
+{
+    client.BaseAddress = new Uri("");
+});
 builder.Services.AddControllers().AddJsonOptions(options =>
 {
     options.JsonSerializerOptions.Converters.Add(new AttributedEnumConvertor());
 });
+
+/*builder.Configuration.AddConsul("Bifrost/appsettings.Development.json", options =>
+{
+    options.Parser = new JsonConfigurationParser();
+    options.ReloadOnChange = true;
+    options.ConsulConfigurationOptions = configuration =>
+    {
+        configuration.Address = new Uri("http://localhost:8500/");
+    };
+}).Build();*/
+builder.Services.Configure<Person>(builder.Configuration.GetSection("appsettings.Development.json:info"));
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-var test = builder.Configuration.GetSection("Test");
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddAuthentication(options =>
-{
-    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-}).AddJwtBearer("Bearer");
-
-builder.Services.AddHttpClient<IAuthService, AuthService>(client =>
-{
-    client.BaseAddress = new Uri("https://staging-auth.snappfood.dev/");
-});
-
+builder.Services.AddTransient<IPersonable, LoginOtpService>();
+/*builder.Services.AddSingleton<IBus>(provider =>
+    RabbitHutch.CreateBus($"username=user;password=password;virtualHost=/;host=localhost:5672"));*/
+//builder.Services.AddOtpService<LoginOtpService>(builder.Configuration.GetConnectionString("RedisConnectionString"), "abbas");
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -37,8 +42,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-///app.UseAuthentication();
-app.UseAuthorization();
 
 app.MapControllers();
 app.Run();

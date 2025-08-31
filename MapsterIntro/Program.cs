@@ -1,6 +1,7 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
 using System.Diagnostics;
+using Bogus;
 using Mapster;
 using MapsterIntro;
 
@@ -10,7 +11,7 @@ var rq = new request
     Weather = "Sunny",
     Temp = 20
 };
-
+var ttt = rq.Adapt<List<Person>>();
 //var h = rq.Weather.GetEnumByAttributeValue<Weather>();
 var c = rq.Adapt<command>();
 var r = c.Adapt<request>();

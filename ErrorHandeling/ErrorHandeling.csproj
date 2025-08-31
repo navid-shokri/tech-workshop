@@ -9,6 +9,9 @@
 
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.4" />
+        <PackageReference Include="NEventStore" Version="9.1.1" />
+        <PackageReference Include="NEventStore.Persistence.Sql" Version="9.2.0" />
+        <PackageReference Include="NEventStore.Serialization.Json" Version="9.1.1" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
     </ItemGroup>
 
@@ -16,6 +19,10 @@
       <Content Include="..\.dockerignore">
         <Link>.dockerignore</Link>
       </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\ClassLibrary1\ClassLibrary1.csproj" />
     </ItemGroup>
 
 </Project>

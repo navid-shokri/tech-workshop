@@ -1,4 +1,5 @@
 using ErrorHandeling.Model;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ErrorHandeling.Controllers;
@@ -12,17 +13,20 @@ public class TestController : ControllerBase
         "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
     };
 
+    private readonly EventStoreHandler _handler;
     private readonly ILogger<TestController> _logger;
 
-    public TestController(ILogger<TestController> logger)
+    public TestController(EventStoreHandler handler,ILogger<TestController> logger)
     {
+        _handler = handler;
         _logger = logger;
     }
-
+    [Authorize]
     [HttpGet(Name = "GetWeatherForecast")]
     public ActionResult<IEnumerable<WeatherForecast>> Get()
     {
-        throw new Exception();
+        _handler.Store();
+        return Ok();
     }
 
     [HttpPost]

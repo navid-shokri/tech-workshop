@@ -7,9 +7,14 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="Bogus" Version="35.6.1" />
+        <PackageReference Include="EasyNetQ" Version="7.8.0" />
         <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.15" />
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.15"/>
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+        <PackageReference Include="SnappFood.Clays.OTP" Version="2.0.0.6" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0"/>
+        <PackageReference Include="Winton.Extensions.Configuration.Consul" Version="3.4.0" />
     </ItemGroup>
 
 </Project>

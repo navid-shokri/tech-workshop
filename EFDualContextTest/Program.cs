@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using EFDualContextTest;
 using EFDualContextTest.DataAccess;
 using EFDualContextTest.Models;
 using EFDualContextTest.Repository;
@@ -24,6 +25,7 @@ builder.Services.AddDbContext<OrderDbContext>(optionsBuilder =>
 builder.Services.AddTransient<IPersonRepository, PersonRepository>();
 builder.Services.AddTransient<ISellerRepository, SellerRepository>();
 builder.Services.AddTransient<IProductRepository, ProductRepository>();
+builder.Services.AddTransient<PublicationService>();
 
 /*builder.Services.AddDbContext<ProductDbContext>(optionsBuilder =>
 {

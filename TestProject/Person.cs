@@ -57,3 +57,13 @@ public class Person : ValueObject<Person>//, IEquatable<Person>
     }*/
 
 }
+
+[Flags]
+public enum Relation
+{
+    None = 0,
+    Father = 1,
+    Mother = 2,
+    Son = 4, 
+    Dougther = 8
+}

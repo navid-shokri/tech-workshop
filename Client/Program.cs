@@ -1,13 +1,24 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
-using System.Transactions;
 using EasyNetQ;
-using Message;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
+using SnappFood.Clays.ServiceBus.Abstractions;
+using SnappFood.Clays.ServiceBus.EasyNetQ;
+using SnappFood.Clays.ServiceBus.EasyNetQ.ServiceBus;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 Console.WriteLine("Hello, World!");
 var bus = RabbitHutch.CreateBus("username=user;password=password;virtualHost=/;host=127.0.0.1:5672");
+var sampleBus = new SampleServiceBus(bus, NullLogger<EasyNetQServiceBus>.Instance);
+var handler = new SampleHandler(bus, NullLogger<SampleHandler>.Instance);
+var sampleListener =
+    new SampleServiceBusListener(sampleBus, new[] { handler }, NullLogger<ServiceBusListenerBase>.Instance);
 
-var exit = "";
+    await sampleListener.RegisterCustomConsumersAsync();
+    await sampleListener.StartAsync(CancellationToken.None);
+    Console.ReadKey();
+
 /*while (true || exit.ToLower().StartsWith('y'))
 {
     var command = new Command();
@@ -21,32 +32,64 @@ var exit = "";
     Console.WriteLine("Exit?(y/N)");
     exit = Console.ReadLine();
     
+}
+
 }*/
-int i = 0;
-while (i < 100)
+
+class SampleServiceBus : EasyNetQServiceBus
 {
-    try
+    public SampleServiceBus(IBus bus, ILogger<EasyNetQServiceBus> logger) : base(bus, logger, "sample" )
     {
-        var command = new Command
-        {
-            Id = i,
-            Family = "test" + i,
-            Name = "test" + i
-        };
-
-        var response = await bus.Rpc.RequestAsync<Command, Result>(command,
-            configuration =>
-            {
-                configuration.WithQueueName(nameof(Command)).WithExpiration(TimeSpan.FromSeconds(10));
-            });
-        Console.WriteLine(response.Data);
-        await Task.Delay(2000);
-        
-
     }
-    catch (Exception e)
+}
+
+class SampleServiceBusListener : ServiceBusListenerBase
+{
+    public SampleServiceBusListener(IServiceBus messageBus, IEnumerable<ICustomMessageHandler> handlers, ILogger<ServiceBusListenerBase> logger) : base(messageBus, handlers, logger)
     {
-        Console.WriteLine(e);
     }
-    i++;
+
+    public override Task RegisterCommandHandlersAsync()
+    {
+        return Task.CompletedTask;
+    }
+
+    public override Task RegisterMessageReceiversAsync()
+    {
+        return Task.CompletedTask;
+    }
+}
+
+class SampleHandler : LimitedRequeueHandler
+{
+    public SampleHandler(IBus serviceBus, ILogger<LimitedRequeueHandler> logger) : base(serviceBus, logger)
+    {
+    }
+
+    protected override int GetRetryLimit() => 3;
+    public override string GetExchangeName() => "test_retry";
+
+    public override string GetExchangeType() => "x-delayed-message";
+
+    public override string GetQueueName() => "test_retry_queue";
+
+    public override Dictionary<string, object> GetMessageHeaders()
+    {
+        return new Dictionary<string, object>();
+    }
+
+    protected override async Task HandleIncomingMessageAsync(ReadOnlyMemory<byte> memory)
+    {
+        var memoryStream = new MemoryStream(memory.ToArray());
+        var person  = await JsonSerializer.DeserializeAsync<Person>(memoryStream);
+        throw new Exception("sample failed handler");
+    }
+
+    
+}
+
+public class Person
+{
+    public string Name { get; set; }
+    public string Family { get; set; }
 }

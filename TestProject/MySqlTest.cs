@@ -10,7 +10,9 @@ public class MySqlTest
     [Fact]
     public void MYSql()
     {
-        var connection = new MySqlConnection("server=localhost; port=3006; database=bordar_db; user=bordar_user; password=bordar_pass; Persist Security Info=False; Connect Timeout=300;Allow User Variables=true;");
+        var connection =
+            new MySqlConnection(
+                "server=localhost; port=3006; database=bordar_db; user=bordar_user; password=bordar_pass; Persist Security Info=False; Connect Timeout=300;Allow User Variables=true;");
         connection.Open();
 
         var str =
@@ -38,8 +40,8 @@ public class MySqlTest
         {
             i++;
         }
-        
-        Assert.Equal(i , 5);
+
+        Assert.Equal(i, 5);
         /*var d = connection.Query<test>(
             "select t.* from (SELECT ob.Id,(@row_number:=@row_number + 1) AS rnk  from OrderBatches as ob,(select @row_number := 0) as x)as t where rnk between 4 and 8");*/
         Console.WriteLine("salam");
@@ -49,14 +51,14 @@ public class MySqlTest
     [Fact]
     public void test5()
     {
-        var text_to_replace = "lazy_fox has green tail"; 
+        var text_to_replace = "lazy_fox has green tail";
         var str = "name.Contains(@1) && family == @2";
         var key = "name";
-        var o =Regex.Matches(str.Substring(str.IndexOf(key)), $"\\(*{key}(.*?)\\@\\d\\)*");
-        var ot = Regex.Replace(str,$"\\(*{key}(.*?)\\@\\d\\)*", text_to_replace);
+        var o = Regex.Matches(str.Substring(str.IndexOf(key)), $"\\(*{key}(.*?)\\@\\d\\)*");
+        var ot = Regex.Replace(str, $"\\(*{key}(.*?)\\@\\d\\)*", text_to_replace);
         Assert.Contains(ot, text_to_replace);
         Assert.Equal(o.First().Value, "@2");
-        
+
     }
 
     [Fact]
@@ -64,15 +66,93 @@ public class MySqlTest
     {
         var list = new List<string> { "ali", "bita" };
         list.Append("navid");
-        
+
         Assert.Equal(list.Count, 3);
+    }
+
+    [Fact]
+    public void salam()
+    {
+        var currentTenant = Tenant.SnappFood;
+
+        Assert.True(TenantTest.SnappFoodAndBordar.HasFlag(currentTenant));
+    }
+
+    [Theory]
+    [InlineData("17:45:00", 1065)]
+    public void TimeSpanParseTest(string value, double data)
+    {
+        var t = TimeSpan.Parse(value).TotalMinutes;
+        Assert.Equal(t, data);
+    }
+    
+    
+    [Fact]
+    public void test()
+    {
+       
+            var arr = new int []{0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+            var o = arr[6..];
+           var t = string.Join("," ,o.Select(x=> $"{x}"));
+           Assert.StartsWith("5", t);
+    }
+
+    [Fact]
+    public void Test1()
+    {
+        List<Relation> relations = new List<Relation> { Relation.Father , Relation.Mother};
+
+        var r = relations.Aggregate((c, i) => c | i);
+        Assert.True(r.HasFlag(Relation.Father));
+        Assert.False(r.HasFlag(Relation.Dougther));
+    }
+
+    [Fact]
+    public void testqqq()
+    {
+        var arr = new int[]
+        { 5,3,9,1,7,2,8 };
+        var t = arr.Order().ToArray()[..3];
+
+        var tf= t.Sum();
+    }
+    
+
+    [Fact]
+    public void Test2()
+    {
+        var all = Enum.GetValues<Relation>();
+        var flags = Relation.Dougther | Relation.Mother;
+
+        var o = all.Select(f => flags & f)
+            .Where(x=>x != Relation.None).ToList();
+        Assert.Equal(o.Count, 2);
     }
 }
 
-class test
+
+
+
+static class  TenantTest
 {
-    public Guid Id { get; set; }
-    public int rnk { get; set; }
+    public static Tenant SnappFoodAndBordar = Tenant.SnappFood | Tenant.Bordar;
+
+    public static bool HasBordarAccess(this Tenant currentTenant)
+    {
+        return SnappFoodAndBordar.HasFlag(currentTenant);
+    }
+    public static Tenant GetSuperTenant(this Tenant currentTenant) 
+    {
+        return SnappFoodAndBordar.HasFlag(currentTenant) ? Tenant.Bordar : currentTenant;
+    }
+}
+
+[Flags]
+public enum Tenant
+{
+    Bordar = 0,
+    SnappFood = 1,
+    ExpressPlus = 2
 }
 
 public class ClassRoom{
@@ -90,5 +170,7 @@ public class Student{
 public class Address{
     public string City {get; set;}
 }
+
+
 
 /*  */

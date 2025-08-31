@@ -1,4 +1,18 @@
+using System.Security.AccessControl;
+
 namespace AuthorizationSample.API;
+
+
+public class  Person {
+    
+    public string Name { get; set; }
+    public string Family { get; set; }
+}
+
+public interface IPersonable
+{
+    string GetFullName();
+}
 
 public class WeatherForecast
 {
